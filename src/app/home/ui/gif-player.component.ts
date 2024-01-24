@@ -17,6 +17,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgStyle } from '@angular/common';
 
 interface GifPlayerState {
   playing: boolean;
@@ -33,7 +34,19 @@ interface GifPlayerState {
         diameter="50"
       ></mat-progress-spinner>
     }
-    <div>
+    <div
+      [style.background]="'url(' + thumbnail + ') 50% 50% / cover no-repeat'"
+      [ngStyle]="
+        status() !== 'loaded' &&
+        !['/assets/nsfw.png', '/assets/default.png'].includes(thumbnail)
+          ? {
+              filter: 'blur(10px) brightness(0.6)',
+              transform: 'scale(1.1)'
+            }
+          : {}
+      "
+      class="preload-background"
+    >
       <video
         (click)="togglePlay$.next()"
         #gifPlayer
@@ -75,7 +88,7 @@ interface GifPlayerState {
       }
     `,
   ],
-  imports: [MatProgressSpinnerModule],
+  imports: [MatProgressSpinnerModule, NgStyle],
 })
 export class GifPlayerComponent {
   @Input({ required: true }) src!: string;
