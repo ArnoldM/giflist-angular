@@ -17,6 +17,7 @@ interface RedditPostData {
 
 interface RedditPreview {
   reddit_video_preview: RedditVideoPreview;
+  images: RedditPreviewImage[];
 }
 
 interface RedditVideoPreview {
@@ -26,4 +27,10 @@ interface RedditVideoPreview {
 
 interface RedditMedia {
   reddit_video: RedditVideoPreview;
+}
+
+interface RedditPreviewImage {
+  source: {
+    url: string;
+  };
 }

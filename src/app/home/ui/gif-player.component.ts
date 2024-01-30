@@ -4,7 +4,9 @@ import {
   effect,
   ElementRef,
   Input,
+  OnChanges,
   signal,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
@@ -90,7 +92,7 @@ interface GifPlayerState {
   ],
   imports: [MatProgressSpinnerModule, NgStyle],
 })
-export class GifPlayerComponent {
+export class GifPlayerComponent implements OnChanges {
   @Input({ required: true }) src!: string;
   @Input({ required: true }) thumbnail!: string;
 
@@ -166,5 +168,9 @@ export class GifPlayerComponent {
         playing ? video.play() : video.pause();
       }
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('changes', changes);
   }
 }
